@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dart_application/etudiant.dart';
 import 'package:dart_application/section.dart';
 
@@ -5,7 +7,7 @@ void main(List<String> arguments) {
   Section section = Section("BTS SIO");
   init(section);
 
-  showEtudiantName(section);
+  print(section.getUnEtudiantRandom2());
 }
 
 void init(Section section) {

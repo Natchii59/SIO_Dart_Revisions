@@ -1,33 +1,19 @@
+import 'dart:math';
+
 import 'package:dart_application/etudiant.dart';
 
 class Section {
-  String _nom = "";
-  int? _niveau = 1;
+  String nom = "";
+  int? niveau = 1;
   final List<Etudiant> _listEtudiants = List.empty(growable: true);
 
-  Section(String nom, {int? niveau}) {
-    _nom = nom;
-    _niveau = niveau;
-  }
-
-  String get nom {
-    return _nom;
-  }
-
-  int? get niveau {
-    return _niveau;
+  Section(String currentNom, {int? currentNiveau}) {
+    nom = currentNom;
+    niveau = currentNiveau;
   }
 
   List<Etudiant> get listEtudiants {
     return _listEtudiants;
-  }
-
-  set nom(String nom) {
-    _nom = nom;
-  }
-
-  set niveau(int? niveau) {
-    _niveau = niveau;
   }
 
   void _sortListEtudiants() {
@@ -50,8 +36,36 @@ class Section {
     }
   }
 
+  Etudiant getUnEtudiantRandom() {
+    if (_listEtudiants.isEmpty) {
+      throw Exception("Il n'y a aucun étudiant dans cette section");
+    }
+
+    Etudiant etudiant = _listEtudiants[Random().nextInt(_listEtudiants.length)];
+
+    etudiant.addDateToInterventions();
+
+    return etudiant;
+  }
+
+  Etudiant getUnEtudiantRandom2() {
+    if (_listEtudiants.isEmpty) {
+      throw Exception("Il n'y a aucun étudiant dans cette section");
+    }
+
+    List<Etudiant> listSorted = _listEtudiants;
+    listSorted.sort((a, b) =>
+        a.getNombreInterventions().compareTo(b.getNombreInterventions()));
+
+    print(listSorted);
+    Etudiant etudiant = listSorted.first;
+    etudiant.addDateToInterventions();
+
+    return etudiant;
+  }
+
   @override
   String toString() {
-    return "Nom: $_nom\nNiveau: $_niveau";
+    return "Nom: $nom\nNiveau: $niveau";
   }
 }
